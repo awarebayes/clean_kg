@@ -19,7 +19,9 @@ def draw_edges(edges: List[Edge], drawer):
         dda(edge.p1(), edge.p2(), drawer.pixel_edge)
 
 
-def find_new_seed_pixels(x_left_edge: int, x_right_edge: int, y: int, drawer: Drawer) -> list:
+def find_new_seed_pixels(
+    x_left_edge: int, x_right_edge: int, y: int, drawer: Drawer
+) -> list:
     """
     Ищет новые затравочные пикселы на строке y
     Начиная с x_left_edge, заканчивая x_right_edge
@@ -30,20 +32,14 @@ def find_new_seed_pixels(x_left_edge: int, x_right_edge: int, y: int, drawer: Dr
         bg_skipped_flag = False
 
         # Пропускаем фон
-        while (
-                drawer.check_color(x, y) == PixelColor.BACKGROUND
-                and x < x_right_edge
-        ):
+        while drawer.check_color(x, y) == PixelColor.BACKGROUND and x < x_right_edge:
             if not bg_skipped_flag:  # флаг, пропускали мы фон или нет
                 bg_skipped_flag = True
             x = x + 1
 
         if bg_skipped_flag:
             # пришли в конец и оказались на фоне
-            if (
-                    x == x_right_edge
-                    and drawer.check_color(x, y) == PixelColor.BACKGROUND
-            ):
+            if x == x_right_edge and drawer.check_color(x, y) == PixelColor.BACKGROUND:
                 new_pixels.append([x, y])
             # пришли куда то еще (на границу) и оказались не на фоне
             else:
@@ -51,9 +47,7 @@ def find_new_seed_pixels(x_left_edge: int, x_right_edge: int, y: int, drawer: Dr
 
         # Пропускаем залитую область или границы
         x_started = x
-        while (
-                drawer.check_color(x, y) != PixelColor.BACKGROUND
-        ) and x < x_right_edge:
+        while drawer.check_color(x, y) != PixelColor.BACKGROUND and x < x_right_edge:
             x = x + 1
 
         if x == x_started:
