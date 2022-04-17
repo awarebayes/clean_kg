@@ -20,6 +20,7 @@ def dda(start, end, place_pixel):
         x += dx
         y += dy
 
+
 # Warning: алгоритм написан +- понятно, но неэффективно
 # Курову не понравилось, что два if подряд
 # Приму мерж
@@ -55,6 +56,7 @@ def bresenham_float(start, end, place_pixel):
             else:
                 x += sign_dx
             error += dy / dx
+
 
 def bresenham_integer(start, end, place_pixel):
     x_1, y_1 = start

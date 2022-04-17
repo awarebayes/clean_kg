@@ -1,8 +1,11 @@
+import dataclasses
+from collections import defaultdict
 from dataclasses import dataclass
 from typing import Tuple, Callable, DefaultDict
 from enum import Enum
 
 Point = Tuple[int, int]
+PlacePixelFunc = Callable[[int, int, int, int], None]
 
 
 class PixelColor(Enum):
@@ -45,14 +48,16 @@ class Edge:
 
 @dataclass
 class Drawer:
-    _line_edge: Callable[[int, int, int, int], None]
-    _line_inside: Callable[[int, int, int, int], None]
-    _line_bg: Callable[[int, int, int, int], None]
-    buffer: DefaultDict[Tuple[int, int], PixelColor]
+    _line_edge: PlacePixelFunc
+    _line_inside: PlacePixelFunc
+    _line_bg: PlacePixelFunc
     canvas_x_low: int
     canvas_x_high: int
     canvas_y_low: int
     canvas_y_high: int
+    buffer: DefaultDict[Tuple[int, int], PixelColor] = dataclasses.field(
+        default_factory=lambda: defaultdict(lambda: PixelColor.BACKGROUND)
+    )  # oof
 
     def pixel_edge(self, x, y):
         self._line_edge(x, y, x, y)

@@ -1,5 +1,5 @@
 from my_types import Edge, PixelColor
-from lines import bresenham_integer # 3 лаба
+from lines import bresenham_integer  # 3 лаба
 
 
 def wait_qt(delay):
